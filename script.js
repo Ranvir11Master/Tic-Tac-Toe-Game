@@ -5,6 +5,7 @@ let msgContainer = document.querySelector(".msg-container");
 let msg = document.querySelector("#msg");
 
 let turnO = true;//playerX, playrtO
+let count = 0; //To track the Draw
 
 const winPatterns = [
       [0, 1, 2],
@@ -17,6 +18,16 @@ const winPatterns = [
       [6, 7, 8],
 ];
 
+
+//Reset Game Button function
+const resetGame = () => {
+  turnO = true;
+  count = 0;
+  enableBoxes();
+  msgContainer.classList.add("hide");
+  msg.innerText = "";
+}
+
 boxes.forEach((box) => {
   box.addEventListener("click", () => {
     console.log("Button was click")
@@ -28,19 +39,25 @@ boxes.forEach((box) => {
         turnO = true;
       }
       box.disabled = true;
+      count++;
+
+      let isWinner = checkWinner();
+
+      if(count === 9 && !isWinner) {
+        drawGame();
+      }
 
 
-    checkWinner();
   });
 });
 
-//Reset Game Button function
-const resetGame = () => {
-  turnO = true;
-  enableBoxes();
-  msgContainer.classList.add("hide");
-  msg.innerText = "";
+//When the Game is Draw
+const drawGame = () => {
+  msg.innerText = `Game was a Draw.`;
+  msgContainer.classList.remove("hide");
+  disableBoxes();
 }
+
 
 //After winning game Enable the Button for click
 const enableBoxes = () => {
@@ -72,10 +89,12 @@ const checkWinner = () => {
       if (pos1 === pos2 && pos2 === pos3) {
         console.log(`Winner is ${pos1}`);
         showWinner(pos1);
+        return true;
       }
     }
 
   }
+  return false;
 };
 
 newGameBtn.addEventListener("click", resetGame);
