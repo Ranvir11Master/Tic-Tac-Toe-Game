@@ -33,9 +33,11 @@ boxes.forEach((box) => {
     console.log("Button was click")
       if(turnO) {
         box.innerText = "O";
+        box.style.color = "#F26419";
         turnO = false
       } else {
         box.innerText = "X";
+        box.style.color = "#2F4858";
         turnO = true;
       }
       box.disabled = true;
@@ -54,6 +56,7 @@ boxes.forEach((box) => {
 //When the Game is Draw
 const drawGame = () => {
   msg.innerText = `Game was a Draw.`;
+  msg.style.color = "#2F4858";
   msgContainer.classList.remove("hide");
   disableBoxes();
 }
@@ -75,6 +78,7 @@ const disableBoxes = () => {
 
 const showWinner = (Winner) => {
   msg.innerText = `Congratulations, winner is ${Winner}`;
+  msg.style.color = "#33658A";
   msgContainer.classList.remove("hide");
   disableBoxes();
 }
